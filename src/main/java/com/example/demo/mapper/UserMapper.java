@@ -1,10 +1,9 @@
 package com.example.demo.mapper;
 
 import com.example.demo.entity.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper // 告诉 Spring 这是一个操作数据库的接口
 public interface UserMapper {
@@ -17,4 +16,11 @@ public interface UserMapper {
     @Insert("INSERT INTO user(name) VALUES(#{name})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insertUser(User user);
+
+    // 在原来的方法下面添加
+    @Select("SELECT * FROM user")
+    List<User> findAll();
+
+    @Delete("DELETE FROM user WHERE id = #{id}")
+    int deleteById(Integer id);
 }

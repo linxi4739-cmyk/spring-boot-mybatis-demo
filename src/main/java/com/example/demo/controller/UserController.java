@@ -5,8 +5,11 @@ import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController // 告诉 Spring 这是一个接口类
 @RequestMapping("/test") // 浏览器访问的前缀
+@CrossOrigin(origins = "*") // 加上这一行，允许所有来源访问
 public class UserController {
 
     @Autowired // 自动连接上面的 UserService
@@ -26,6 +29,17 @@ public class UserController {
         } else {
             return "添加失败，请检查数据库连接。";
         }
+    }
+    // 访问路径：http://localhost:8080/test/all
+    @GetMapping("/all")
+    public List<User> getAll() {
+        return userService.getAllUsers();
+    }
+
+    @GetMapping("/delete")
+    public String deleteUser(@RequestParam Integer id) {
+        int result = userService.deleteUser(id);
+        return result > 0 ? "删除成功！" : "删除失败，ID 不存在。";
     }
 
 

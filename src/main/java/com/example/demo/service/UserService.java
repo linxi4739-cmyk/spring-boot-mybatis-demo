@@ -5,6 +5,8 @@ import com.example.demo.mapper.UserMapper; // 导入刚才写的 Mapper
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -21,6 +23,15 @@ public class UserService {
     public User findUserById(Integer id) {
         // 这一步就是真正的数据库查询了
         return userMapper.findById(id);
+    }
+
+    // 在原来的方法下面添加
+    public List<User> getAllUsers() {
+        return userMapper.findAll();
+    }
+
+    public int deleteUser(Integer id) {
+        return userMapper.deleteById(id);
     }
 
 
