@@ -25,6 +25,11 @@ public class UserService {
         return userMapper.findById(id);
     }
 
+    // 2. 新增：按名字查询 (对应你刚才在 Controller 改的地方)
+    public User findByName(String name) {
+        return userMapper.findByName(name);
+    }
+
     // 在原来的方法下面添加
     public List<User> getAllUsers() {
         return userMapper.findAll();

@@ -20,6 +20,12 @@ public class UserController {
         return userService.findUserById(id);
     }
 
+    @GetMapping("/findByName")
+    public User findByName(@RequestParam String name) {
+        return userService.findByName(name);
+    }
+
+
     // 访问地址：http://localhost:8080/test/add?name=张三
     @GetMapping("/add")
     public String addUser(@RequestParam String name) {
@@ -41,6 +47,8 @@ public class UserController {
         int result = userService.deleteUser(id);
         return result > 0 ? "删除成功！" : "删除失败，ID 不存在。";
     }
+
+
 
 
 }

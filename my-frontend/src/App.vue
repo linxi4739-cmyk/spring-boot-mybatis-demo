@@ -20,12 +20,22 @@ const fetchAll = async () => {
 
 // --- 2. 按ID查询单个用户 ---
 const searchUser = async () => {
-  if (!userId.value) return alert("请输入ID")
+  if (!userId.value) return alert("请输入内容")
+
+  // 判断输入的是不是数字
+  const isNumber = !isNaN(userId.value)
+
+  // 根据判断结果，拼接不同的 URL
+  const url = isNumber
+      ? `http://localhost:8080/test/hello?id=${userId.value}`      // 如果是数字，走 ID 接口
+      : `http://localhost:8080/test/findByName?name=${userId.value}` // 如果是文字，走名字接口
+
   try {
-    const response = await fetch(`http://localhost:8080/test/hello?id=${userId.value}`)
+    const response = await fetch(url)
     userData.value = await response.json()
   } catch (e) {
-    alert("查询失败，请检查 ID 是否正确")
+    alert("未找到该用户")
+    userData.value = null
   }
 }
 
@@ -52,7 +62,8 @@ const addUser = async () => {
 const removeUser = async (id) => {
   if (!confirm(`确定要删除 ID 为 ${id} 的用户吗？`)) return
   try {
-    const response = await fetch(`http://localhost:8080/test/delete?id=${id}`)
+    //const response = await fetch(`http://localhost:8080/test/delete?id=${id}`)
+    const response = await fetch(`http://localhost:8080/test/findByName?name=${userId.value}`)
     const msg = await response.text()
     alert(msg)
     fetchAll() // 删完刷新列表
@@ -88,7 +99,11 @@ fetchAll()
 
     <div style="background: #f1f8ff; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
       <h3 style="margin-top:0">🔍 查询用户</h3>
-      <input v-model="userId" placeholder="输入用户 ID" style="padding: 8px; width: 60%;"/>
+      <input
+          v-model="userId"
+          placeholder="请输入 ID 或姓名"  style="padding: 8px; width: 60%;"
+          @keyup.enter="searchUser"
+      />
       <button @click="searchUser" style="padding: 8px 15px; background: #2196f3; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 5px;">
         立即查询
       </button>
