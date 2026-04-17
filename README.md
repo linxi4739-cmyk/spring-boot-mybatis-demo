@@ -51,18 +51,4 @@ npm run dev
 
 访问地址：http://localhost:5173
 
----
 
-### 💡 如何在 IDEA 里操作？
-
-1.  **新建文件**：在 IDEA 左侧的项目树里，右键点击最顶层的 **`demo2`** 文件夹 -> **New** -> **File**。
-2.  **命名**：输入 `README.md`（注意后缀是 `.md`，代表 Markdown 格式）。
-3.  **粘贴**：把上面的模板复制进去保存。
-4.  **同步到 GitHub**：
-    ```bash
-    git add README.md
-    git commit -m "docs: 添加项目自述文件 README"
-    git push origin main
-    ```
-
----
